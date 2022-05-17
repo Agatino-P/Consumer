@@ -2,8 +2,10 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using MassTransit;
 
+// ReSharper disable once CheckNamespace
 namespace GettingStarted
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class Program
     {
         private const string QueueName = "MyQueue";
@@ -14,7 +16,7 @@ namespace GettingStarted
             await CreateHostBuilder(args).Build().RunAsync();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((mtContext, services) =>
                 {
