@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Agicap.Contracts;
@@ -18,7 +19,13 @@ public class PaymentPaidConsumer : IConsumer<IPaymentPaid>
 
     public Task Consume(ConsumeContext<IPaymentPaid> context)
     {
-        _logger.Log(LogLevel.Information, $"{context.Message.PaymentId} {context.Message.PaidDate}");
+        IPaymentPaid payment = context.Message!;
+        _logger.Log(LogLevel.Information,
+            $"\n\n{payment.PaymentId} received at {DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:ffff")}");
+
+        if ((payment.PaymentId.ToString()).StartsWith('1'))
+            throw new NotImplementedException();
+        //_logger.Log(LogLevel.Information, $"{payment.PaymentId} {payment.PaidDate}");
         return Task.CompletedTask;
     }
 }

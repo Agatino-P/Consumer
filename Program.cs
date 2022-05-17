@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using MassTransit;
@@ -37,6 +38,8 @@ namespace GettingStarted
                             cfg.ReceiveEndpoint(
                                 QueueName,
                                 rabbitMqReceiveEndpointConfigurator => rabbitMqReceiveEndpointConfigurator.ConfigureConsumer<PaymentPaidConsumer>(rmqContext));
+                            cfg.UseMessageRetry(r => r.Intervals(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(15), TimeSpan.FromSeconds(20)));
+                            //cfg.UseDelayedRedelivery(r => r.Intervals(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(50), TimeSpan.FromSeconds(100)));
                         });
                     });
 
